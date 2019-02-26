@@ -1,0 +1,99 @@
+{% load martortags %}
+{% load blog_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static "css/blog.css"%}" rel="stylesheet">
+  <link href="{% static "css/style.css"%}" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+         <!-- Brand -->
+         <a class="navbar-brand" href="/blog/">
+	   <img src={% static "images/logo.jpg" %} alt="Logo" style="width:40px;">
+	 </a>
+ 
+         <!-- Toggler/collapsibe Button -->
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+ 
+         <!-- Navbar links -->
+         <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item">
+                  <a class="nav-link" href="/blog/">Home</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="#">Archive</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="#">About</a>
+               </li>
+            </ul>
+	    <ul class="navbar-nav ml-auto">
+	      <li class="nav-item">
+		<a class="nav-link" href="/blog/search/">Search Posts</a>
+	      </li>
+	    </ul>
+	      
+         </div>
+      </nav>
+
+  <div class="intro1">
+    <img class="img-fluid" src="{% static "images/hamrongxua.jpg" %}" style="width:1700px;height:300px;">
+  </div>
+  <br/>
+  <br/>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <div id="sidebar">
+    <h2><a href="/blog/">Sông-Mã blog</a></h2>
+    <p>This is my blog. I've written {% total_posts %} posts so far.</p>
+    <h3>Latest posts</h3>
+    {% show_latest_posts 3 %}
+    
+    <h3>Most commented posts</h3>
+    {% get_most_commented_posts as most_commented_posts %}
+    <ul>
+      {% for post in most_commented_posts %}
+      <li>
+	<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <p><a href="{% url "blog:post_feed" %}">Subcribe to my RSS feed </a></p>
+    <br/>
+    <div style="overflow:hidden;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="datetimepicker13"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker13').datetimepicker({
+                inline: true,
+                sideBySide: true
+            });
+        });
+    </script>
+
+  </div>
+    <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;height=200&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=hungdh.85%40gmail.com&amp;color=%23691426&amp;ctz=Asia%2FHo_Chi_Minh" style="border-width:0" width="250" height="200" frameborder="0" scrolling="no"></iframe>
+      </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
