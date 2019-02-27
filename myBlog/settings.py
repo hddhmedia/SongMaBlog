@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from decouple import config, Csv
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5q)!t-k+^sl!fd-^5poe_=b%o4u)f62@&iws8^n+3i+eyl@n1)'
-
+#SECRET_KEY = '5q)!t-k+^sl!fd-^5poe_=b%o4u)f62@&iws8^n+3i+eyl@n1)'
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['192.168.3.6', '192.168.3.8', '127.0.0.1', '192.168.3.9', '192.168.3.5', '192.168.3.10', '192.168.3.7', '192.168.3.2', '192.168.3.4']
+#ALLOWED_HOSTS = config('AlLOWED_HOSTS', cast=Csv())
+
 
 SITE_ID = 1
 # Application definition
@@ -97,6 +101,11 @@ DATABASES = {
     }
 }
 
+#DATABASES = {
+#    'default': dj_database_url.config(
+#        default=config('DATABASE_URL')
+#        )
+#    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
